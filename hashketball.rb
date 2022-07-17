@@ -127,3 +127,65 @@ def game_hash
 end
 
 # Write code here
+def home_team
+  game_hash[:home]
+end
+
+def away_team
+  game_hash[:away]
+end
+
+def data_team(team)
+  (home_team[:team_name] == team) ? home_team : away_team
+end
+
+def players
+  home_team[:players] + away_team[:players]
+end
+
+def player(player_name)
+  players.find {|player| player[:player_name] == player_name}
+end
+
+def team_points(team)
+  team[:players].map{|player| player[:points]}.reduce(&:+)
+end
+
+def num_points_scored(player_name)
+  player(player_name)[:points]
+end
+
+def shoe_size(player_name)
+  player(player_name)[:shoe]
+end
+
+def team_colors(team_name)
+  data_team(team_name)[:colors]
+end
+
+def team_names
+  [home_team[:team_name], away_team[:team_name]]
+end
+
+def player_numbers(team_name)
+  data_team(team_name)[:players].map {|player| player[:number]}
+end
+
+def player_stats(player_name)
+  player(player_name)
+end
+
+def big_shoe_rebounds
+  players.sort_by{|player| -player[:shoe]}.first[:rebounds]
+end
+
+def most_points_scored
+  players.sort_by{|player| -player[:points]}.first[:player_name]
+end
+
+def winning_team
+  team_points(home_team) > team_points(away_team) ? "Brooklyn Nets" : "Charlotte Hornets"
+end
+
+puts "The player has the most points is #{most_points_scored}"
+puts "The team has the most points is #{winning_team}"
