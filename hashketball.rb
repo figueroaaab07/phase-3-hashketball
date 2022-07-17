@@ -143,8 +143,8 @@ def players
   home_team[:players] + away_team[:players]
 end
 
-def player(player_name)
-  players.find {|player| player[:player_name] == player_name}
+def player_data(player_name)
+  players.find{|player| player[:player_name] == player_name}
 end
 
 def team_points(team)
@@ -152,11 +152,11 @@ def team_points(team)
 end
 
 def num_points_scored(player_name)
-  player(player_name)[:points]
+  player_data(player_name)[:points]
 end
 
 def shoe_size(player_name)
-  player(player_name)[:shoe]
+  player_data(player_name)[:shoe]
 end
 
 def team_colors(team_name)
@@ -172,7 +172,7 @@ def player_numbers(team_name)
 end
 
 def player_stats(player_name)
-  player(player_name)
+  player_data(player_name)
 end
 
 def big_shoe_rebounds
@@ -187,5 +187,15 @@ def winning_team
   team_points(home_team) > team_points(away_team) ? "Brooklyn Nets" : "Charlotte Hornets"
 end
 
+def player_with_longest_name
+  players.sort_by{|player| -player[:player_name].length}.first[:player_name]
+end
+
+def long_name_steals_a_ton?
+  players.sort_by{|player| -player[:steals]}.first[:player_name] == player_with_longest_name
+end
+
 puts "The player has the most points is #{most_points_scored}"
 puts "The team has the most points is #{winning_team}"
+puts "The player has the longest name is #{player_with_longest_name}"
+puts "The player with the longest name had the most steals is #{long_name_steals_a_ton?}"
